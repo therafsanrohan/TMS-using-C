@@ -40,3 +40,17 @@ system.
 7. Exit: It will terminate the program.
 
 
+Project Instructions:
+
+So there will be 3 options before login:
+1. SignUp
+2. Login
+3. Exit
+   
+There will be also 3 options after login.
+1. Add Tasks
+2. View Task
+3. Delete Account
+4. Exit
+
+
