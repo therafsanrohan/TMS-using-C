@@ -1,4 +1,4 @@
-## Problem Statement:
+# Problem Statement:
 You have to design a task management system where it must have a signup
 and login system. Users will sign up by entering his/her Username (each user name needs to be
 unique), and Password. This signup data will be stored in the "signup.txt" file. After successful
@@ -8,8 +8,8 @@ logging in again.
 
 
 
-## Functionalities:
-1. # Add Tasks: After successful login, the User can add tasks. To add a task, the user needs to
+# Functionalities:
+1. Add Tasks: After successful login, the User can add tasks. To add a task, the user needs to
 select the option to add tasks and then, the user needs to give the date, and then the task
 description.
 
@@ -46,7 +46,7 @@ system.
 
 
 
-## Project Instructions:
+# Project Instructions:
 
 So there will be 3 options before login:
 1. SignUp
