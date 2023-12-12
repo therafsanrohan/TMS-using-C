@@ -9,7 +9,7 @@ logging in again.
 
 
 ## Functionalities:
-1. Add Tasks: After successful login, the User can add tasks. To add a task, the user needs to
+1. # Add Tasks: After successful login, the User can add tasks. To add a task, the user needs to
 select the option to add tasks and then, the user needs to give the date, and then the task
 description.
 
