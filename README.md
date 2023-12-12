@@ -6,8 +6,9 @@ signup, the user will log in to the system by checking his/her credentials (User
 Password). If the credentials do not match, the system will show the error message and suggest
 logging in again.
 
-Functionalities:
 
+
+Functionalities:
 1. Add Tasks: After successful login, the User can add tasks. To add a task, the user needs to
 select the option to add tasks and then, the user needs to give the date, and then the task
 description.
@@ -38,6 +39,11 @@ another text file. After successful deletion, the user will be automatically exi
 system.
 
 7. Exit: It will terminate the program.
+
+
+
+
+
 
 
 Project Instructions:
