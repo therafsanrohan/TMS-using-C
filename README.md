@@ -1,4 +1,4 @@
-# Problem Statement:
+# Problem Statement
 You have to design a task management system where it must have a signup
 and login system. Users will sign up by entering his/her Username (each user name needs to be
 unique), and Password. This signup data will be stored in the **"signup.txt"** file. After successful
@@ -25,9 +25,7 @@ following format:
 **jmsbond007 10/12/2023 Structured_Programming_Language_Project**
 
 2. _**View Tasks:**_ To view the tasks of a particular date, the user needs to select the option of
-view tasks first, then the user needs to provide the date as follows: DD/MM/YYYY. For
-example, the user named **jmsbond007 enters the date: 10/12/2023**. Then, the system will
-look for the tasks of jmsbond007 on the file named **"tasks.txt"** on that day. Then, it will
+view tasks first, then the user needs to provide the date as follows: DD/MM/YYYY. For example, the user named **jmsbond007 enters the date: 10/12/2023**. Then, the system will look for the tasks of jmsbond007 on the file named **"tasks.txt"** on that day. Then, it will
 show the tasks of that day of jmsbond007 in the console. If no task is found of
 jmsbond007 on that day, you need to print **"No Tasks Found"** on the console.
 
