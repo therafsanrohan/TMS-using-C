@@ -16,7 +16,6 @@ void viewTasks(char *username, char *date);
 // Function to delete a user account, requiring the username and password for verification.
 void deleteAccount(char *username, char *password);
 
-
 int main() {
     int choice;  // Variable to store user's main menu choice
     char username[50], password[50];  // Variables to store user credentials
