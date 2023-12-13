@@ -269,4 +269,3 @@ void deleteAccount(char *username, char *password) {
         printf("Error deleting account.\n");
     }
 }
-
