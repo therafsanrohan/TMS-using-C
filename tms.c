@@ -120,14 +120,14 @@ void signUp() {
     char username[50], password[50];
 
     // Prompt user to enter username
-    printf("Enter your username (without spaces or special characters): ");
+    printf("Enter your username: ");
 
     // Read username from user input
     scanf(" %[^\n]", username);  // Read the entire line, allowing spaces
 
     // Loop until a valid username is provided
     while (!isValidUsername(username)) {
-        printf("Invalid username. Please enter a username without spaces or special characters: ");
+        printf("Invalid username. \nPlease enter a username without spaces or special characters: ");
         scanf(" %[^\n]", username);
     }
     // Open the file for reading
