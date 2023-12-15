@@ -1,8 +1,13 @@
 #include <stdio.h>    // Standard input/output functions
 #include <stdlib.h>   // Standard library functions, such as memory allocation
 #include <string.h>   // String manipulation functions
-#include <stdbool.h>
-#include <ctype.h>
+
+/* The "ctype.h" header file is included to provide functions for character classification
+and character conversion in the C Standard Library.
+It contains functions that are useful for working with characters, such as testing
+whether a character is a digit or a letter, and converting characters between
+uppercase and lowercase. */
+#include <ctype.h>  
 
 //.......... (unchanged code)----->
 // Function prototypes
@@ -113,29 +118,28 @@ int main() {
 void signUp() {
     // Declare variables to store username and password
     char username[50], password[50];
-    
+
     // Prompt user to enter username
     printf("Enter your username (without spaces or special characters): ");
-    
+
     // Read username from user input
-    scanf("%s", username);
+    scanf(" %[^\n]", username);  // Read the entire line, allowing spaces
 
     // Loop until a valid username is provided
     while (!isValidUsername(username)) {
         printf("Invalid username. Please enter a username without spaces or special characters: ");
-        scanf("%s", username);
+        scanf(" %[^\n]", username);
     }
-
     // Open the file for reading
     FILE *file = fopen("signup.txt", "r");
 
     // Check if the file is opened successfully
     if (file != NULL) {
-        // Declare variable to store existing usernames
-        char existingUsername[50];
+        // Declare variable to store existing usernames and passwords
+        char existingUsername[50], existingPassword[50];
 
-        // Loop through existing usernames in the file
-        while (fscanf(file, "%s", existingUsername) != EOF) {
+        // Loop through existing usernames and passwords in the file
+        while (fscanf(file, "%s %s", existingUsername, existingPassword) == 2) {
             // Check if the entered username already exists
             if (strcmp(username, existingUsername) == 0) {
                 fclose(file); // Close the file
@@ -146,12 +150,11 @@ void signUp() {
 
         fclose(file); // Close the file after checking existing usernames
     }
-
     // Prompt user to enter password
     printf("Enter your password: ");
 
     // Read password from user input
-    scanf("%s", password);
+    scanf(" %[^\n]", password);  // Read the entire line, allowing spaces
 
     // Open the file for appending (creating if not exists)
     file = fopen("signup.txt", "a");
@@ -160,10 +163,10 @@ void signUp() {
     if (file != NULL) {
         // Write the new username and password to the file
         fprintf(file, "%s %s\n", username, password);
-        
+
         // Close the file after writing
         fclose(file);
-        
+
         // Display success message
         printf("Signup successful!\n");
     } else {
@@ -171,7 +174,6 @@ void signUp() {
         printf("Error saving user information.\n");
     }
 }
-
 // Function to perform user login
 int login(char *username, char *password) {
     // Declare variables to store user input
@@ -322,7 +324,6 @@ void deleteAccount(char *username, char *password) {
         printf("Error deleting account.\n");
     }
 }
-
 // Function to check if a date is valid
 int isValidDate(char *date) {
     // Variables to store day, month, and year components of the date
@@ -340,8 +341,6 @@ int isValidDate(char *date) {
     // If all checks pass, return 1 indicating a valid date
     return 1; // Valid date
 }
-
-
 // Function to check if a username is valid
 // Returns 1 if the username is valid, 0 otherwise
 int isValidUsername(char *username) {
@@ -353,5 +352,3 @@ int isValidUsername(char *username) {
     }
     return 1; // Valid username
 }
-
-
