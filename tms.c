@@ -1,6 +1,8 @@
 #include <stdio.h>    // Standard input/output functions
 #include <stdlib.h>   // Standard library functions, such as memory allocation
 #include <string.h>   // String manipulation functions
+#include <stdbool.h>
+#include <ctype.h>
 
 //.......... (unchanged code)----->
 // Function prototypes
@@ -28,6 +30,8 @@ void deleteAccount(char *username, char *password); //..........(unchanged code)
 // Takes a date string as a parameter
 // Returns 1 if the date is valid, 0 otherwise
 int isValidDate(char *date);
+
+int isValidUsername(char *username);
 
 // Main function
 int main() {
@@ -105,43 +109,61 @@ int main() {
 
     return 0;
 }
-/// Function to handle user signup
+// Function to handle user signup
 void signUp() {
     // Declare variables to store username and password
     char username[50], password[50];
+    
     // Prompt user to enter username
-    printf("Enter your username: ");
+    printf("Enter your username (without spaces or special characters): ");
+    
     // Read username from user input
     scanf("%s", username);
+
+    // Loop until a valid username is provided
+    while (!isValidUsername(username)) {
+        printf("Invalid username. Please enter a username without spaces or special characters: ");
+        scanf("%s", username);
+    }
+
     // Open the file for reading
     FILE *file = fopen("signup.txt", "r");
+
     // Check if the file is opened successfully
     if (file != NULL) {
         // Declare variable to store existing usernames
         char existingUsername[50];
+
         // Loop through existing usernames in the file
         while (fscanf(file, "%s", existingUsername) != EOF) {
             // Check if the entered username already exists
             if (strcmp(username, existingUsername) == 0) {
                 fclose(file); // Close the file
                 printf("Username already exists. Please choose a different username.\n");
-                return; // Exit the function if username already exists
+                return; // Exit the function if the username already exists
             }
         }
+
         fclose(file); // Close the file after checking existing usernames
     }
+
     // Prompt user to enter password
     printf("Enter your password: ");
+
     // Read password from user input
     scanf("%s", password);
+
     // Open the file for appending (creating if not exists)
     file = fopen("signup.txt", "a");
+
     // Check if the file is opened successfully for appending
     if (file != NULL) {
         // Write the new username and password to the file
         fprintf(file, "%s %s\n", username, password);
+        
         // Close the file after writing
         fclose(file);
+        
         // Display success message
         printf("Signup successful!\n");
     } else {
@@ -149,6 +171,7 @@ void signUp() {
         printf("Error saving user information.\n");
     }
 }
+
 // Function to perform user login
 int login(char *username, char *password) {
     // Declare variables to store user input
@@ -157,6 +180,13 @@ int login(char *username, char *password) {
     printf("Enter your username: ");
     // Read the username input from the user
     scanf("%s", inputUsername);
+
+    // Check if the entered username is valid
+    if (!isValidUsername(inputUsername)) {
+        printf("Your username type is invalid. Please try entering a username without any spaces or special characters.\n");
+        return 0;
+    }
+
     // Prompt the user to enter their password
     printf("Enter your password: ");
     // Read the password input from the user
@@ -310,3 +340,18 @@ int isValidDate(char *date) {
     // If all checks pass, return 1 indicating a valid date
     return 1; // Valid date
 }
+
+
+// Function to check if a username is valid
+// Returns 1 if the username is valid, 0 otherwise
+int isValidUsername(char *username) {
+    while (*username) {
+        if (!isalnum(*username) && *username != '_') {
+            return 0; // Invalid character in the username
+        }
+        username++;
+    }
+    return 1; // Valid username
+}
+
+
