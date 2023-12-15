@@ -29,23 +29,19 @@ void deleteAccount(char *username, char *password); //..........(unchanged code)
 // Returns 1 if the date is valid, 0 otherwise
 int isValidDate(char *date);
 
-
 // Main function
 int main() {
     // Declare variables
     int choice;
     char username[50], password[50];
-
     // Main menu loop
     do {
         // Display main menu options
         printf("Task Management System\n");
         printf("1. SignUp\n2. Login\n3. Exit\n");
         printf("Enter your choice: ");
-
         // Get user choice
         scanf("%d", &choice);
-
         // Switch based on user choice
         switch (choice) {
             case 1:
@@ -60,11 +56,9 @@ int main() {
                     do {
                         // Display logged-in menu options
                         printf("1. Add Tasks\n2. View Tasks\n3. Delete Account\n4. Exit\n");
-                        printf("Enter your choice: ");
-                        
+                        printf("Enter your choice: ");                      
                         // Get logged-in user choice
                         scanf("%d", &loggedInChoice);
-
                         // Switch based on logged-in user choice
                         switch (loggedInChoice) {
                             case 1:
@@ -111,26 +105,20 @@ int main() {
 
     return 0;
 }
-
 /// Function to handle user signup
 void signUp() {
     // Declare variables to store username and password
     char username[50], password[50];
-
     // Prompt user to enter username
     printf("Enter your username: ");
-
     // Read username from user input
     scanf("%s", username);
-
     // Open the file for reading
     FILE *file = fopen("signup.txt", "r");
-
     // Check if the file is opened successfully
     if (file != NULL) {
         // Declare variable to store existing usernames
         char existingUsername[50];
-
         // Loop through existing usernames in the file
         while (fscanf(file, "%s", existingUsername) != EOF) {
             // Check if the entered username already exists
@@ -140,27 +128,20 @@ void signUp() {
                 return; // Exit the function if username already exists
             }
         }
-
         fclose(file); // Close the file after checking existing usernames
     }
-
     // Prompt user to enter password
     printf("Enter your password: ");
-
     // Read password from user input
     scanf("%s", password);
-
     // Open the file for appending (creating if not exists)
     file = fopen("signup.txt", "a");
-
     // Check if the file is opened successfully for appending
     if (file != NULL) {
         // Write the new username and password to the file
         fprintf(file, "%s %s\n", username, password);
-
         // Close the file after writing
         fclose(file);
-
         // Display success message
         printf("Signup successful!\n");
     } else {
@@ -168,27 +149,20 @@ void signUp() {
         printf("Error saving user information.\n");
     }
 }
-
 // Function to perform user login
 int login(char *username, char *password) {
     // Declare variables to store user input
     char inputUsername[50], inputPassword[50];
-
     // Prompt the user to enter their username
     printf("Enter your username: ");
-    
     // Read the username input from the user
     scanf("%s", inputUsername);
-
     // Prompt the user to enter their password
     printf("Enter your password: ");
-    
     // Read the password input from the user
     scanf("%s", inputPassword);
-
     // Open the file "signup.txt" in read mode
     FILE *file = fopen("signup.txt", "r");
-
     // Check if the file was successfully opened
     if (file != NULL) {
         // Loop through each line in the file
@@ -200,55 +174,47 @@ int login(char *username, char *password) {
                 printf("Login successful!\n");
                 return 1; // Return 1 to indicate successful login
             }
-        }
-        
+        } 
         // Close the file if the end of file is reached
         fclose(file);
     }
-
     // Notify the user of invalid username or password and prompt them to try again
     printf("Invalid username or password. Please try again.\n");
-
     // Return 0 to indicate unsuccessful login
     return 0;
 }
-
-
 // Function to add a task to the tasks.txt file
 void addTask(char *username) {
     // Declare variables to store date and task description
     char date[11], taskDescription[100];
-    
     // Prompt the user to enter the date in the format DD/MM/YYYY
     printf("Enter date (DD/MM/YYYY): ");
-    
     // Read the date input from the user
     scanf("%s", date);
-
     // Check if the entered date is in a valid format using the isValidDate function
     if (!isValidDate(date)) {
         // Display an error message and return if the date is invalid
         printf("Invalid date format. Please try again.\n");
         return;
     }
-
-    // Prompt the user to enter the task description (no spaces, use underscores)
-    printf("Enter task description (no spaces, use underscores): ");
-    
+    // Prompt the user to enter the task description (with spaces)
+    printf("Enter task description: ");
     // Read the task description input from the user
-    scanf("%s", taskDescription);
-
+    scanf(" %[^\n]", taskDescription);
+    // Replace spaces in the task description with underscores
+    for (int i = 0; taskDescription[i]; i++) {
+        if (taskDescription[i] == ' ') {
+            taskDescription[i] = '_';
+        }
+    }
     // Open the tasks.txt file in append mode
     FILE *file = fopen("tasks.txt", "a");
-    
     // Check if the file was successfully opened
     if (file != NULL) {
         // Write the task information to the file in the format: username date task_description
-        fprintf(file, "%s %s %s\n", username, date, taskDescription);
-        
+        fprintf(file, "%s %s %s\n", username, date, taskDescription);      
         // Close the file after writing
         fclose(file);
-        
         // Display a success message
         printf("Task added successfully!\n");
     } else {
@@ -256,15 +222,12 @@ void addTask(char *username) {
         printf("Error adding task. Unable to open the file.\n");
     }
 }
-
 // Function to view tasks from the tasks.txt file
 void viewTasks(char *username, char *date) {
     // Declare variables to store data from the file
     char fileUsername[50], fileDate[11], fileTask[100];
-    
     // Variable to track if any tasks were found for the given username and date
     int found = 0;
-
     // Open the tasks.txt file in read mode
     FILE *file = fopen("tasks.txt", "r");
 
@@ -278,20 +241,16 @@ void viewTasks(char *username, char *date) {
                 found = 1;
                 printf("Task: %s\n", fileTask);
             }
-        }
-        
+        }  
         // Close the file after reading
         fclose(file);
     }
-
     // Check if any tasks were found
     if (!found) {
         // Print a message if no tasks were found for the given username and date
         printf("No Tasks Found.\n");
     }
 }
-
-
 // Function to delete the user account
 void deleteAccount(char *username, char *password) {
     // Prompting the user to enter their password for account deletion
@@ -343,14 +302,11 @@ int isValidDate(char *date) {
     if (sscanf(date, "%2d/%2d/%4d", &day, &month, &year) != 3) {
         return 0; // Return 0 if the date format is invalid (not enough or too many components)
     }
-
     // Check if month, day, and date are within valid ranges
     if (month < 1 || month > 12 || day < 1 || day > 31 ||
         (month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
         return 0; // Return 0 if the date components are out of valid ranges
     }
-
     // If all checks pass, return 1 indicating a valid date
     return 1; // Valid date
 }
-
