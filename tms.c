@@ -1,6 +1,7 @@
 #include <stdio.h>    // Standard input/output functions
 #include <stdlib.h>   // Standard library functions, such as memory allocation
 #include <string.h>   // String manipulation functions
+#include <time.h>
 
 /* The "ctype.h" header file is included to provide functions for character classification
 and character conversion in the C Standard Library.
@@ -37,6 +38,9 @@ void deleteAccount(char *username, char *password); //..........(unchanged code)
 int isValidDate(char *date);
 
 int isValidUsername(char *username);
+
+// Function to prompt the user to enter a valid date
+void enterValidDate(char *date);
 
 // Main function
 int main() {
@@ -75,17 +79,16 @@ int main() {
                                 addTask(username);
                                 break;
                             case 2: {
-                                // User chooses to view tasks for a specific date
-                                char date[11];
-                                printf("Enter date (DD/MM/YYYY): ");
-                                scanf("%s", date);
-                                if (isValidDate(date)) {
-                                    viewTasks(username, date);
-                                } else {
-                                    printf("Invalid date format. Please try again.\n");
-                                }
-                                break;
+                            // User chooses to view tasks for a specific date
+                            char date[11];
+                            enterValidDate(date);  // Use the helper function to get a valid date
+                            if (isValidDate(date)) {
+                                viewTasks(username, date);
+                            } else {
+                                printf("Invalid date format. Please try again.\n");
                             }
+                            break;
+                        }
                             case 3:
                                 // User chooses to delete account
                                 deleteAccount(username, password);
@@ -220,9 +223,8 @@ void addTask(char *username) {
     // Declare variables to store date and task description
     char date[11], taskDescription[100];
     // Prompt the user to enter the date in the format DD/MM/YYYY
-    printf("Enter date (DD/MM/YYYY): ");
-    // Read the date input from the user
-    scanf("%s", date);
+    // printf("Enter date (DD/MM/YYYY): "); // Double problem
+    enterValidDate(date); // Use the helper function to get a valid date
     // Check if the entered date is in a valid format using the isValidDate function
     if (!isValidDate(date)) {
         // Display an error message and return if the date is invalid
@@ -333,11 +335,18 @@ int isValidDate(char *date) {
     if (sscanf(date, "%2d/%2d/%4d", &day, &month, &year) != 3) {
         return 0; // Return 0 if the date format is invalid (not enough or too many components)
     }
+
+    // Check if sscanf parsed the entire string (i.e., valid integers for day, month, and year)
+    if (strlen(date) != 10 || date[2] != '/' || date[5] != '/') {
+        return 0; // Return 0 if the date format is invalid (wrong separators or length)
+    }
+
     // Check if month, day, and date are within valid ranges
     if (month < 1 || month > 12 || day < 1 || day > 31 ||
         (month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
         return 0; // Return 0 if the date components are out of valid ranges
     }
+
     // If all checks pass, return 1 indicating a valid date
     return 1; // Valid date
 }
@@ -351,4 +360,21 @@ int isValidUsername(char *username) {
         username++;
     }
     return 1; // Valid username
+}
+// Function to prompt the user to enter a valid date
+void enterValidDate(char *date) {
+    int isValid = 0;
+
+    while (!isValid) {
+        // Clear the input buffer before prompting for date
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        printf("Enter date (DD/MM/YYYY): ");
+        if (scanf("%s", date) != 1 || !isValidDate(date)) {
+            printf("Invalid date format. Please try again.\n");
+        } else {
+            isValid = 1;
+        }
+    }
 }
